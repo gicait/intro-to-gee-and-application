@@ -289,4 +289,100 @@ print(KHMAdm)
 
 ## Working with Charts
 
+In this section, we will try to plot population of each province in Cambodia as a bar chart. So let’s first bring some population data which currently available in GEE and visualize it.
+
+```javascript
+var dataset = 
+ee.ImageCollection("CIESIN/GPWv411/GPW_UNWPP-Adjusted_Population_Count").first();
+
+var population = dataset.select('unwpp-adjusted_population_count');
+
+print(population);
+
+var visParams = { "min": 0.0, "max": 1000.0, "palette": ['yellow', 'red'], }; 
+Map.setCenter(104.2, 12.9, 8);
+Map.addLayer(population, visParams, ‘Population');
+```
+
+Now, let’s plot population of each province as bar chart.
+
+```javascript
+// This will cumulate population in each province 
+var popByProvince = population.reduceRegions({
+	collection: KHMAdm,
+	reducer: ee.Reducer.sum(),
+	scale: 1000,
+});
+print(popByProvince);
+
+var chart = ui.Chart.feature.byFeature(popByProvince, 'NAME_1', 'sum').setChartType('ColumnChart')
+print(chart);
+```
+
+**Let’s Bring All Together Again**
+
+```javascript
+var KHMAdm = ee.FeatureCollection("users/lakmal/KHM_adm");
+
+var dataset = 
+ee.ImageCollection("CIESIN/GPWv411/GPW_UNWPP-Adjusted_Population_Count").first();
+
+var population = dataset.select('unwpp-adjusted_population_count');
+
+var popByProvince = population.reduceRegions({
+	collection: KHMAdm,
+	reducer: ee.Reducer.sum(),
+	scale: 1000,
+});
+
+var chart = ui.Chart.feature.byFeature(popByProvince, 'NAME_1', 'sum').setChartType('ColumnChart')
+print(chart);
+```
+
+![Chart](./graphics/chart.png)
+
 ## Additional Stuff (Mosaicking and Mapping)
+
+**Mosaicking**
+
+Mosaicking refers to the process of spatially assembling image datasets to produce a spatially continuous image.
+
+```javascript
+var studyArea = ee.Geometry.Rectangle(103.66, 12.39, 104.64, 13.28); 
+
+var drySeason = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
+	.filterDate('2018-03-11', '2018-03-13')
+	.filterBounds(studyArea)
+
+print(drySeason)
+
+var mosaicDrySeason = drySeason.mosaic()
+
+print(mosaicDrySeason)
+
+var visParams = { bands: ['B4', 'B3', 'B2'], min: 0, max: 3000 }
+Map.setCenter(104.2, 12.9, 5)
+Map.addLayer(mosaicDrySeason, visParams);
+```
+
+**Mapping over Image Collection**
+
+Mapping can be used to perform a operation over all images in an image collection.
+
+```javascript
+var studyArea = ee.Geometry.Rectangle(103.66, 12.39, 104.64, 13.28)
+
+var drySeason = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
+	.filterDate('2018-03-11', '2018-03-13')
+	.filterBounds(studyArea)
+
+var waterDetection = function(image) {
+	return image.select('B5').lt(1000)
+}
+
+var drySeasonWater = drySeason.map(waterDetection)
+
+print(drySeasonWater)
+```
+
+_Exercise: Use above case study of Water Extent change of Tonlé Sap Lake to calculate province wise flooded area and plot province wise flooded area as bar chart. And use a population layer in GEE and calculate province wise population under flooded area  and plot it as bar chart._
