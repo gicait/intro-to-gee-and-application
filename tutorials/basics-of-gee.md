@@ -138,7 +138,7 @@ Map.addLayer(ndvi, {min: -1, max: 1, palette: ['yellow', 'green']}, 'NDVI');
 ![Landsat NDVI](./graphics/landsat_ndvi.png)
 
 _Exercise: Use following expression to calculate Enhanced Vegetation Index (EVI) which is another vegetation index and compare with NDVI.
-2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))_
+\2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))_
 
 _Exercise: As we do early, use simple threshold to detect flood water from Near Infrared (NIR) Band. Tip: use expression similar to - nir.gt(1000)_
 
