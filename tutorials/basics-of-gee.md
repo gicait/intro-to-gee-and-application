@@ -11,7 +11,7 @@ var dem = ee.Image('CGIAR/SRTM90_V4');
 print(dem)
 ```
 
-_Note (Little bit information about SRTM): SRTM is Free Global Digital Elevation Models in 30m Spatial Resolution. The SRTM was produced from 11-day mission of the Space Shuttle Endeavour in February 2000 with modified radar system. You can download SRTM Data from http://srtm.csi.cgiar.org/srtmdata/ _
+_Note (Little bit information about SRTM): SRTM is Free Global Digital Elevation Models in 30m Spatial Resolution. The SRTM was produced from 11-day mission of the Space Shuttle Endeavour in February 2000 with modified radar system. You can download SRTM Data from http://srtm.csi.cgiar.org/srtmdata/_
 
 Then, let’s try to visualize SRTM image in the map viewer. And add more colors to have meaningful visualization.
 
