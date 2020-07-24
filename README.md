@@ -6,6 +6,16 @@ This tutorial includes short and minimalistic few example codes covering fundame
 
 ## Content
 
+Content of this tutorial is as follows,
+* Accessing and Visualizing Images
+* Mathematical Operations with Images
+* Exporting Images from GEE
+* Working with Image Collections
+* Case Study – Analyzing change of Water Extent
+* Working with Vector Data
+* Working with Charts
+* Additional Stuff (Mosaicking and Mapping)
+
 ## Acknowledgements
 
 Created by N. Lakmal Deshapriya for activites of Geoinformatics Center of Asian Institute of Technology, Thailand.
