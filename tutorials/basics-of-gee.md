@@ -238,7 +238,7 @@ Map.addLayer(flooosWater, visParams, 'Flood');
 Map.addLayer(flooosWaterFlt, visParams, 'FloodFlt');
 ```
 
-_**Finally Let’s Bring All Together**_
+**Finally Let’s Bring All Together**
 
 ```javascript
 var studyArea = ee.Geometry.Rectangle(103.66, 12.39, 104.64, 13.28);
