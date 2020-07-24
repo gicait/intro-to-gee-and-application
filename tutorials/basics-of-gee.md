@@ -267,6 +267,26 @@ Map.addLayer(flooosWaterFlt, visParams, 'FloodFlt');
 
 ## Working with Vector Data
 
+We can add our data (in this case Shapefile of administrative boundary of Cambodia) to GEE with following steps.
+* Click on "Assets"
+* Click on "New" and select "Shape files"
+* Select KHM_adm shapefile in ZIP format (located in "data" folder)
+* Click on "Upload"
+* After that, uploaded KHM_adm shapefile can be seen in "Assets" section
+
+Now let’s visualize uploaded shapefile of Cambodia administrative boundary units in GEE which is similar to image visualization that we did early. 
+
+```javascript
+var KHMAdm = ee.FeatureCollection("users/lakmal/KHM_adm"); 
+
+Map.setCenter(104.2, 12.9, 8); 
+
+Map.addLayer(KHMAdm, {color: 'red'}, 'KHM Admin');
+print(KHMAdm)
+```
+
+![KHM Admin](./graphics/KHM_admin.png)
+
 ## Working with Charts
 
 ## Additional Stuff (Mosaicking and Mapping)
