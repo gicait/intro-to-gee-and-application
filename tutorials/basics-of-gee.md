@@ -87,3 +87,34 @@ print(lst8Col)
 
 _Note (Little bit information about Landsat 8): The Landsat program is the longest-running satellite imagery acquisition program of Earth starting from July 23, 1972. Landsat 8 is the most recent Satellite in the series launched on 11 February 2013. Spatial resolution is 30m and revisit time is 16 Days. You can download SRTM Data from http://earthexplorer.usgs.gov/_
 
+Now let’s visualize Landsat 8 image from the Collection with least cloud content as RGB image.
+
+```javascript
+print(lst8Col.first())
+
+var visParams = {
+	bands: ['B4', 'B3', 'B2'],
+	min: 0,
+	max: 3000
+}; 
+
+Map.setCenter(104.2, 12.9, 5);
+Map.addLayer(lst8Col.first(), visParams);
+```
+
+![SRTM Visualization](./graphics/landsat_rgb.png)
+
+Now let’s visualize image with Near Infrared (NIR) band which is suitable to distinguish water and land, as well as sensitive to vegetation content.
+
+```javascript
+var visParams = {
+	bands: 'B5',
+	min: 0,
+	max: 3000
+}; 
+
+Map.setCenter(104.2, 12.9, 5);
+Map.addLayer(lst8Col.first(), visParams);
+```
+
+![SRTM Visualization](./graphics/landsat_nir.png)
