@@ -31,3 +31,22 @@ Map.addLayer(elevation, {min: 0, max: 2565,
 ```
 ![SRTM Visualization](./graphics/srtm_vis.png)
 
+## Mathematical Operations with Images
+
+First, let’s try simple mathematical operations by classifying elevation higher than 1000 m in to one class and rest in to another class.
+
+```javascript
+var elevationMask = elevation.gt(1000);
+
+Map.setCenter(101.1412, 15.008, 5);
+Map.addLayer(elevationMask, {min: 0, max: 1}, 'Mask');
+```
+
+![SRTM Visualization](./graphics/srtm_vis.png)
+
+_Exercise 1: Divide elevation image in to 3 classes as below and visualize it._
+_* < 500 m : class 1_
+_* Between 500 and 1500 m : class 2_
+_* > 1500 m : class 3_
+
+_Exercise 2: Search for a population data source in GEE and visualize it. Then classify it into 2 classes of your choice and visualize it._
