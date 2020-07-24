@@ -27,3 +27,4 @@ Map.addLayer(elevation, {min: 0, max: 2565,
 	palette: ['brown', 'green']}, 'Elevation');
 
 ```
+![SRTM Visualization](./graphics/srtm_vis.png)
