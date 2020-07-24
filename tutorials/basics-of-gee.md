@@ -42,14 +42,14 @@ Map.setCenter(101.1412, 15.008, 5);
 Map.addLayer(elevationMask, {min: 0, max: 1}, 'Mask');
 ```
 
-![SRTM Visualization](./graphics/srtm_2class.png)
+![SRTM 2 Class](./graphics/srtm_2class.png)
 
-_Exercise 1: Divide elevation image in to 3 classes as below and visualize it._
+_Exercise: Divide elevation image in to 3 classes as below and visualize it._
 _* < 500 m : class 1_
 _* Between 500 and 1500 m : class 2_
 _* > 1500 m : class 3_
 
-_Exercise 2: Search for a population data source in GEE and visualize it. Then classify it into 2 classes of your choice and visualize it._
+_Exercise: Search for a population data source in GEE and visualize it. Then classify it into 2 classes of your choice and visualize it._
 
 ## Exporting Images from GEE
 
@@ -102,7 +102,7 @@ Map.setCenter(104.2, 12.9, 5);
 Map.addLayer(lst8Col.first(), visParams);
 ```
 
-![SRTM Visualization](./graphics/landsat_rgb.png)
+![Landsat RGB](./graphics/landsat_rgb.png)
 
 Now let’s visualize image with Near Infrared (NIR) band which is suitable to distinguish water and land, as well as sensitive to vegetation content.
 
@@ -117,4 +117,28 @@ Map.setCenter(104.2, 12.9, 5);
 Map.addLayer(lst8Col.first(), visParams);
 ```
 
-![SRTM Visualization](./graphics/landsat_nir.png)
+![Landsat NIR](./graphics/landsat_nir.png)
+
+_Exercise: Try more False Color Composites (specially 7-5-3 band) Images emphasizing more on different land cover types. For more information about False Color Composites refer to https://www.harrisgeospatial.com/Learn/Blogs/Blog-Details/ArtMID/10198/ArticleID/15691/The-Many-Band-Combinations-of-Landsat-8_
+
+Now, let’s use mathematical operations between bands (Band Math) to calculate NDVI (Normalized Difference Vegetation Index) which indicated vegetation level.
+
+```javascript
+var image = lst8Col.first();
+
+var ndvi = image.expression(
+	'(NIR-RED)/(NIR+RED)',
+	{'NIR': image.select('B5'), 'RED': image.select('B4')}
+);
+
+Map.setCenter(104.2, 12.9, 15);
+Map.addLayer(ndvi, {min: -1, max: 1, palette: ['yellow', 'green']}, 'NDVI');
+```
+
+![Landsat NDVI](./graphics/landsat_ndvi.png)
+
+_Exercise: Use following expression to calculate Enhanced Vegetation Index (EVI) which is another vegetation index and compare with NDVI_
+_* 2.5 * ((NIR - RED) / (NIR + 6 * RED - 7.5 * BLUE + 1))_
+
+_Exercise: As we do early, use simple threshold to detect flood water from Near Infrared (NIR) Band. Tip: use expression similar to - nir.gt(1000)_
+
