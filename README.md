@@ -18,7 +18,7 @@ Content of this tutorial is as follows,
 
 ## Acknowledgements
 
-Created by N. Lakmal Deshapriya for activites of Geoinformatics Center of Asian Institute of Technology, Thailand.
+Created by [N. Lakmal Deshapriya](https://github.com/lakmalnd) for activites of Geoinformatics Center of Asian Institute of Technology, Thailand.
 
 ## References 
 * Gorelick, N., Hancher, M., Dixon, M., Ilyushchenko, S., Thau, D., & Moore, R. (2017). Google Earth Engine: Planetary-scale geospatial analysis for everyone. Remote Sensing of Environment.
