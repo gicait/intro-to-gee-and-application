@@ -1,5 +1,5 @@
 
-# Basics of Google Earth Engine (GEE) - Python
+# Chapter 1 - Basics of Google Earth Engine (GEE) - Python
 
 Google Earth Engine (GEE) is a platform for scientific analysis and visualization of geospatial datasets, for academic, non-profit, business and government users. There are lots of satellite data and geo spatial data gathered every day. Those data are not used by many people due to large size and complicated nature of satellite data. GEE provides online platform that can be used to access, visualize, analyze those data within google cloud.
 
