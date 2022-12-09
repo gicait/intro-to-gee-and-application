@@ -1,4 +1,4 @@
-# Appendix_1: Short Notes for Using Google Earth Engine (GEE) with JavaScript (Optional)
+# Appendix 1: Short Notes for Using Google Earth Engine (GEE) with JavaScript (Optional)
 
 We can use 2 main languages (Python and JavaScript) to work with GEE. This section includes some short notes on how to use JavaScript to work with GEE. Content is almost identical to Python content. And this is an optional section.
 
@@ -6,14 +6,14 @@ GEE provide in-built code editor to work with GEE JavaScript. So First, let's si
 
 __Content__
 
-- 1) Accessing and Visualizing Images
-- 2) Mathematical Operations with Images
-- 3) Exporting Images from GEE
-- 4) Working with Image Collections
-- 5) Case Study – Analyzing change of Water Extent
-- 6) Working with Vector Data
-- 7) Working with Charts
-- 8) Additional Stuff (Mosaicking and Mapping)
+- (1) Accessing and Visualizing Images
+- (2) Mathematical Operations with Images
+- (3) Exporting Images from GEE
+- (4) Working with Image Collections
+- (5) Case Study – Analyzing change of Water Extent
+- (6) Working with Vector Data
+- (7) Working with Charts
+- (8) Additional Stuff (Mosaicking and Mapping)
 
 ## 1) Accessing and Visualizing Images
 
