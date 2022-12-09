@@ -13,16 +13,16 @@ Some of important links related to GEE.
 __Content__
 
 * (1) Google Earth Engine Initial Set-up
-* 2 Getting Started with GEE Images
-* 3 Mathematical Operations on Images
-* 4 Exporting GEE Images
-  * 4.1 Export as Numpy array
-  * 4.2 Export as GeoTiFF file
-* 5 Working with Image Collections is GEE
-  * 5.1 Defining Image Collection
-  * 5.2 Reducing an ImageCollection
-  * 5.3 Additional Stuff (Mosaicking and Mapping)
-* 6 Vector Data and Charts in GEE
+* (2) Getting Started with GEE Images
+* (3) Mathematical Operations on Images
+* (4) Exporting GEE Images
+  * (4.1) Export as Numpy array
+  * (4.2) Export as GeoTiFF file
+* (5) Working with Image Collections is GEE
+  * (5.1) Defining Image Collection
+  * (5.2) Reducing an ImageCollection
+  * (5.3) Additional Stuff (Mosaicking and Mapping)
+* (6) Vector Data and Charts in GEE
 
 ## 1) Google Earth Engine Initial Set-up
 
