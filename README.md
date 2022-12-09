@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This tutorial includes introduction to Google Earth Engine (GEE) with wide-range of applications using Python. 
+Google Earth Engine (GEE) is a platform for scientific analysis and visualization of geospatial datasets, for academic, non-profit, business and government users. There are lots of satellite data and geo spatial data gathered every day. Those data are not used by many people due to large size and complicated nature of satellite data. GEE provides online platform that can be used to access, visualize, analyze those data within google cloud.
 
-__short and minimalistic few example codes covering fundamentals of Google Earth Engine with JavaScript. Examples covers both vector and raster data analysis in Google Earth Engine. And data used in example codes are also included in tutorial folder. __
+This tutorial includes introduction to Google Earth Engine (GEE) with wide-range of applications of GEE. We are using Python Programing language for this tutorial. It's recommended to use Google Colab (https://colab.research.google.com/) for these tutorials.
 
 ## Content
 
