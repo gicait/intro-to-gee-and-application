@@ -1,8 +1,21 @@
-# Basics of Google Earth Engine (GEE)
+# Appendix_1: Short Notes for Using Google Earth Engine (GEE) with JavaScript (Optional)
 
-First, sign in to GEE and go to https://code.earthengine.google.com/
+We can use 2 main languages (Python and JavaScript) to work with GEE. This section includes some short notes on how to use JavaScript to work with GEE. Content is almost identical to Python content. And this is an optional section.
 
-## Accessing and Visualizing Images
+GEE provide in-built code editor to work with GEE JavaScript. So First, let's sign in to GEE and go to https://code.earthengine.google.com/
+
+__Content__
+
+- 1) Accessing and Visualizing Images
+- 2) Mathematical Operations with Images
+- 3) Exporting Images from GEE
+- 4) Working with Image Collections
+- 5) Case Study – Analyzing change of Water Extent
+- 6) Working with Vector Data
+- 7) Working with Charts
+- 8) Additional Stuff (Mosaicking and Mapping)
+
+## 1) Accessing and Visualizing Images
 
 Let’s try to access a single image first with SRTM Digital Elevation Model (DEM) dataset.
 
@@ -31,7 +44,7 @@ Map.addLayer(elevation, {min: 0, max: 2565,
 ```
 ![SRTM Visualization](./graphics/srtm_vis.png)
 
-## Mathematical Operations with Images
+## 2) Mathematical Operations with Images
 
 First, let’s try simple mathematical operations by classifying elevation higher than 1000 m in to one class and rest in to another class.
 
@@ -51,7 +64,7 @@ _* > 1500 m : class 3_
 
 _Exercise: Search for a population data source in GEE and visualize it. Then classify it into 2 classes of your choice and visualize it._
 
-## Exporting Images from GEE
+## 3) Exporting Images from GEE
 
 Let’s export over elevation masked images to Google Drive.
 
@@ -68,7 +81,7 @@ Export.image.toDrive({
 
 After running this code, go to "Tasks" tab and Click Run to start export in to Google Drive. After export, you can download from Google Drive and open in GIS software and go ahead with other analysis.
 
-## Working with Image Collections
+## 4) Working with Image Collections
 
 In most cases, we have to work with set of images rather than a single image. As an example, images from a sensor in a satellite, time series climate data, etc. are available as set of images. These are referred as Image Collection in GEE. In most cases, Image Collection is a stack or time series of images.
 
@@ -142,7 +155,7 @@ _Exercise: Use following expression to calculate Enhanced Vegetation Index (EVI)
 
 _Exercise: As we do early, use simple threshold to detect flood water from Near Infrared (NIR) Band. Tip: use expression similar to - nir.gt(1000)_
 
-## Case Study – Analyzing change of Water Extent
+## 5) Case Study – Analyzing change of Water Extent
 
 In this section, we will do flood mapping case study in Tonlé Sap lake in Cambodia. We will use Landsat 8 images in wet and dry season to sea change of water extent of the lake. And meanwhile we will learn more concepts, tools in GEE, such as Reduction over Image Collections, more on mathematical operations, etc.
 
