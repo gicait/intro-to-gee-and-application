@@ -20,7 +20,9 @@ Content of this tutorial is as follows,
   * (4) Exporting GEE Images
   * (5) Working with Image Collections is GEE
   * (6) Vector Data and Charts in GEE
-* __Chapter 2 - Case Studies (Working on)__
+* __Chapter 2 - Case Studies__
+ * (1) Mapping Surface Water Dynamics
+ * (2) Mapping Agricultural Area
 * __Chapter 3 - Image Supervised and Unsupervised Classification with GEE__
   * (1) Supervised Classification
   * (2) Accuracy Assessment
