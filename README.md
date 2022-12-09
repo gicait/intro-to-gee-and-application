@@ -9,19 +9,19 @@ This tutorial includes introduction to Google Earth Engine (GEE) with wide-range
 ## Content
 
 Content of this tutorial is as follows,
-* Chapter 1 - Basics of Google Earth Engine (GEE) - Python
-  * 1) Google Earth Engine Initial Set-up
-  * 2) Getting Started with GEE Images
-  * 3) Mathematical Operations on Images
-  * 4) Exporting GEE Images
-  * 5) Working with Image Collections is GEE
-  * 6) Vector Data and Charts in GEE
+* __Chapter 1 - Basics of Google Earth Engine (GEE) - Python__
+  * (1) Google Earth Engine Initial Set-up
+  * (2) Getting Started with GEE Images
+  * (3) Mathematical Operations on Images
+  * (4) Exporting GEE Images
+  * (5) Working with Image Collections is GEE
+  * (6) Vector Data and Charts in GEE
 * Chapter 2 - Case Studies (Working on)
 * Chapter 3 - Image Supervised and Unsupervised Classification with GEE
-  * 1) Supervised Classification
-  * 2) Accuracy Assessment
-  * 3) Unsupervised Classification (Clustering)
- * Chapter 4 - 
+  * (1) Supervised Classification
+  * (2) Accuracy Assessment
+  * (3) Unsupervised Classification (Clustering)
+ * ZAppendix 1 - Short Notes for Using Google Earth Engine (GEE) with JavaScript (Optional)
 
 ## Acknowledgements
 
