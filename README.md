@@ -24,6 +24,8 @@ Content of this tutorial is as follows,
   * (1) Mapping Surface Water Dynamics
   * (2) Mapping Agricultural Area
   * (3) Mapping Drought Area
+  * (4) *Assessing Ground Water Dynamics with GRACE Satellite Data (To be Completed)*
+  * (5) *Assessing Impact of COVID19 on Air Pollution using Sentinel-5P Satellite Data (To be Completed)*
 * __Chapter 3 - Image Supervised and Unsupervised Classification with GEE__
   * (1) Supervised Classification
   * (2) Accuracy Assessment
