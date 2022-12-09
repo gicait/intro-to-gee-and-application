@@ -23,6 +23,7 @@ Content of this tutorial is as follows,
 * __Chapter 2 - Case Studies (Applications) of GEE__
   * (1) Mapping Surface Water Dynamics
   * (2) Mapping Agricultural Area
+  * (3) Mapping Drought Area
 * __Chapter 3 - Image Supervised and Unsupervised Classification with GEE__
   * (1) Supervised Classification
   * (2) Accuracy Assessment
