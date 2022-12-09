@@ -1,8 +1,10 @@
-# Basics of Google Earth Engine
+# Introduction of Google Earth Engine (GEE) and Some Applications using Python
 
 ## Introduction
 
-This tutorial includes short and minimalistic few example codes covering fundamentals of Google Earth Engine with JavaScript. Examples covers both vector and raster data analysis in Google Earth Engine. And data used in example codes are also included in tutorial folder. 
+This tutorial includes introduction to Google Earth Engine (GEE) with wide-range of applications using Python. 
+
+__short and minimalistic few example codes covering fundamentals of Google Earth Engine with JavaScript. Examples covers both vector and raster data analysis in Google Earth Engine. And data used in example codes are also included in tutorial folder. __
 
 ## Content
 
