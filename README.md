@@ -16,12 +16,12 @@ Content of this tutorial is as follows,
   * (4) Exporting GEE Images
   * (5) Working with Image Collections is GEE
   * (6) Vector Data and Charts in GEE
-* Chapter 2 - Case Studies (Working on)
-* Chapter 3 - Image Supervised and Unsupervised Classification with GEE
+* __Chapter 2 - Case Studies (Working on)__
+* __Chapter 3 - Image Supervised and Unsupervised Classification with GEE__
   * (1) Supervised Classification
   * (2) Accuracy Assessment
   * (3) Unsupervised Classification (Clustering)
- * ZAppendix 1 - Short Notes for Using Google Earth Engine (GEE) with JavaScript (Optional)
+ * __zAppendix 1 - Short Notes for Using Google Earth Engine (GEE) with JavaScript (Optional)__
 
 ## Acknowledgements
 
