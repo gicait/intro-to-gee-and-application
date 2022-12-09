@@ -1,4 +1,4 @@
-# Introduction of Google Earth Engine (GEE) and Some Applications using Python
+# Introduction of Google Earth Engine (GEE) and Applications using Python
 
 ## Introduction
 
