@@ -1,0 +1,211 @@
+
+# Case Studies - Google Earth Engine (GEE)
+
+Here, we will do some case studies using concepts that we have learned in previous sections. Following case studies will be covered during this session.
+
+__Content__
+
+- 1) Mapping Surface Water Dynamics
+- 2) Mapping Agricultural Area
+
+Before start, let's perform GEE Authenticate, Initialize, and importing libraries.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+import ee
+import geemap
+
+ee.Authenticate()
+ee.Initialize()
+```
+
+## 1) Mapping Surface Water Dynamics
+
+In this section, we will do a flood mapping case study in Tonlé Sap lake in Cambodia. We will use Landsat 8  images in wet and dry seasons to see the change of water extent of the lake, as shown in below Figure. And meanwhile we will learn more concepts, tools in GEE.
+
+![lake_water_change](./graphics/lake_water_change.PNG)
+
+Let's assume, wet and dry seasons of Cambodia are as follows,
+- Dry Season - '2018-03-01','2018-04-30'
+- Wet Season - '2018-09-01' to '2018-10-30'
+
+Let’s first define an image collection for dry season in Cambodia and perform following steps,
+
+- reduce collection by minimum operations
+- select NIR bands
+- apply threshold to get the water area
+- visualize the water area
+
+```python
+studyArea = ee.Geometry.Rectangle(103.66, 12.39, 104.64, 13.28);
+drySeason = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2').filterDate('2018-03-01','2018-04-30').filterBounds(studyArea)
+
+drySeasonMin = drySeason.min()
+drySeasonNIR = drySeasonMin.select('SR_B5')
+drySeasonWater = drySeasonNIR.lt(11000)
+
+Map = geemap.Map(center = [12.9674,104.0529], zoom = 8)
+vis_Para = {'min': 0, 'max': 1}
+Map.addLayer(drySeasonWater, vis_Para, name="Dry Season")
+Map
+```
+
+__Note:__ Since wet and dry both image collections contains many images, we can use some time series analysis to reduce image collection to an one image. Since water pixels are the dark pixels (less pixel value), if we perform time series minimum, we will get maximum water extent in a time period. In some references, this is called as cell statistics. And it’s powerful technique that can be used to reduce set of images into a single image. As a byproduct of this process, we are removing clouds (brighter pixels) in the images as well.
+
+Now let's try to do same steps for wet season too.
+
+```python
+studyArea = ee.Geometry.Rectangle(103.66, 12.39, 104.64, 13.28);
+wetSeason = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2').filterDate('2018-09-01','2018-10-30').filterBounds(studyArea)
+
+wetSeasonMin = wetSeason.min()
+wetSeasonNIR = wetSeasonMin.select('SR_B5')
+wetSeasonWater = wetSeasonNIR.lt(11000)
+
+Map = geemap.Map(center = [12.9674,104.0529], zoom = 8)
+vis_Para = {'min': 0, 'max': 1}
+Map.addLayer(wetSeasonWater, vis_Para, name="Wet Season")
+Map
+```
+
+Flood water in wet season are the water, which was absent in the dry season and present in the wet season. This can be extracted using Boolean math operation (*flooosWater = wetSeasonWater.eq(1).And(drySeasonWater.eq(0))*) or simply subtracting wet season water extent by dry season water extent as below,
+
+```python
+floodWater = wetSeasonWater.subtract(drySeasonWater)
+
+Map = geemap.Map(center = [12.9674,104.0529], zoom = 8)
+vis_Para = {'min': 0, 'max': 1}
+Map.addLayer(floodWater, vis_Para, name="Flood Water")
+Map
+```
+
+Furthermore we can use post-processing step call focal filtering to smooth out unwanted small noise in flood image as below,
+
+![Reduce_Neighborhood](./graphics/Reduce_Neighborhood.png)
+
+```python
+floodWaterFilt = floodWater.focal_mode(2)
+```
+
+__*Finally let’s bring all together in to a one code*__
+
+```python
+studyArea = ee.Geometry.Rectangle(103.66, 12.39, 104.64, 13.28)
+
+# for dry season
+drySeason = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2').filterDate('2018-03-01','2018-04-30').filterBounds(studyArea)
+drySeasonMin = drySeason.min()
+drySeasonNIR = drySeasonMin.select('SR_B5')
+drySeasonWater = drySeasonNIR.lt(11000)
+
+# for wet season
+wetSeason = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2').filterDate('2018-09-01','2018-10-30').filterBounds(studyArea)
+wetSeasonMin = wetSeason.min()
+wetSeasonNIR = wetSeasonMin.select('SR_B5')
+wetSeasonWater = wetSeasonNIR.lt(11000)
+
+# subtracting to create flood map
+floodWater = wetSeasonWater.subtract(drySeasonWater)
+
+# filtering to remove noise
+floodWaterFilt = floodWater.focal_mode(2)
+
+# visualize the final result
+Map = geemap.Map(center = [12.9674,104.0529], zoom = 8)
+vis_Para = {'min': 0, 'max': 1}
+Map.addLayer(floodWaterFilt, vis_Para, name="Flood Water")
+Map
+```
+
+__Exercise:__ Use output of above case study to calculate province wise flooded area and plot province-wise flooded area as a bar chart.
+
+And answer is as below. You can try to do by yourself first and compare your answer with below code.
+
+```python
+admin_l2 = ee.FeatureCollection("FAO/GAUL/2015/level2")
+admin_cam = admin_l2.filter(ee.Filter.eq('ADM0_NAME', 'Cambodia'))
+
+flood_sum = floodWaterFilt.reduceRegions(admin_cam, ee.Reducer.sum(), 1000)
+
+admin1_name = flood_sum.aggregate_array('ADM1_NAME').getInfo()
+flood_in_admin1 = flood_sum.aggregate_array('sum').getInfo()
+plt.figure(figsize=(20,10))
+plt.bar(admin1_name, flood_in_admin1)
+plt.xticks(admin1_name, rotation='vertical')
+plt.show()
+```
+
+__Exercise:__ Similarly use a population layer in GEE and calculate province wise population under flooded area and plot it as a bar chart as well.
+
+## 2) Mapping Agricultural Area
+
+In this case study, we will use satellite images to map paddy area of an irrigation scheme in a Nueva Ecija province of Philippines. We will use same ideas that we used in our last GEE sessions, as well as couple of new ideas in GEE.
+
+Find and get 2 Sentinel-1 (COPERNICUS/S1_GRD) images acquired in following days
+
+- Start of the season - '2019-01-15' to '2019-01-20'
+- End of the season - '2019-03-28' to '2019-03-31'
+
+And our study area is,
+
+- Left Longitude - 120.77
+- Bottom Latitude - 15.43
+- Right Longitude - 121.13
+- Top Latitude - 15.72
+
+Here we are using microwave satellite data from a satellite call Sentinel-1. The microwave satellite data penetrate through cloud and also doesn't depend on sun light. Hence they can use for all day, all weather observations. So it can be used in rainy season as well. But the disadvantage here is difficulty of interpretation of microwave satellite data.
+
+The Sentinel-1 mission provides data from a dual-polarization C-band Synthetic Aperture Radar (SAR) instrument. This collection includes the S1 Ground Range Detected (GRD) scenes, processed using the Sentinel-1 Toolbox to generate a calibrated, ortho-corrected product. The collection is updated daily. New assets are ingested to GEE within two days after they become available.
+
+Similar to NIR data, water appears dark in microwave satellite data. This property of microwave satellite data, as well as all weather observation capabilities are frequently used in flood mapping, rice mapping with flooding in paddy-fields, etc.
+
+In this case of paddy fields, microwave satellite looks dark at the beginning of paddy season due to flooding in paddy-fields. And they look brighter before harvesting, because of grown up paddy plants in fields. We are going to use this property in this case study to map paddy areas.
+
+First let's define our image collections of Sentinel-1 images in start and end of the season
+
+```python
+studyArea = ee.Geometry.Rectangle(120.77, 15.43, 121.13, 15.72)
+
+startSeason = ee.ImageCollection('COPERNICUS/S1_GRD').filterDate('2019-01-15','2019-01-20').filterBounds(studyArea)
+endSeason = ee.ImageCollection('COPERNICUS/S1_GRD').filterDate('2019-03-28','2019-03-31').filterBounds(studyArea)
+
+print(startSeason.size().getInfo())
+print(endSeason.size().getInfo())
+```
+
+We can see, we have only one image in both image collections. So let's choose that, select the VH band and go ahead.
+
+```python
+startSeasonImg = startSeason.first()
+endSeasonImg = endSeason.first()
+
+startSeasonVH = startSeasonImg.select(['VH'], ['VH_start'])
+endSeasonVH = endSeasonImg.select(['VH'], ['VH_end'])
+```
+
+If we visualize our images at the start and the end of the season, we can see that, the start of the season paddy areas are in dark color, because of the availability of water in paddy fields. And at the end of the season, paddy areas are in brighter color, because of grown up paddy plants in fields. We can use false color composite concept that we have learned early to visualize this property (paddy-fields). Graphical representation of this idea is shown in in below figure,
+
+![fcc_rice](./graphics/fcc_rice.PNG)
+
+So first, let's define another image stacking these 2 images (*startSeasonVH* and *endSeasonVH*) as bands and visualize the false color composite image, as below,
+- Red band - *endSeasonVH*
+- Green band - *startSeasonVH*
+- Blue band - *startSeasonVH*
+
+```python
+imageFCC = ee.Image([startSeasonVH, endSeasonVH])
+
+Map = geemap.Map(center = [15.55,120.95], zoom = 8)
+vis_Para = {'min': -50, 'max': 1, 'bands': ['VH_end', 'VH_start', 'VH_start']}
+Map.addLayer(imageFCC, vis_Para, name="Paddy Area")
+Map
+```
+
+Results of FCC should look like below. And paddy area is shown in red color
+
+![result_paddy_mapping](./graphics/result_paddy_mapping.PNG)
+
+__Exercise:__ Similar to case study 1, try to extract paddy area using subtraction and thresholding operations
