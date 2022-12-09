@@ -1,12 +1,13 @@
 
-# Case Studies - Google Earth Engine (GEE)
+# Case Studies (Applications) of Google Earth Engine (GEE)
 
 Here, we will do some case studies using concepts that we have learned in previous sections. Following case studies will be covered during this session.
 
 __Content__
 
-- 1) Mapping Surface Water Dynamics
-- 2) Mapping Agricultural Area
+- (1) Mapping Surface Water Dynamics
+- (2) Mapping Agricultural Area
+- (3) Mapping Drought Area
 
 Before start, let's perform GEE Authenticate, Initialize, and importing libraries.
 
@@ -209,3 +210,52 @@ Results of FCC should look like below. And paddy area is shown in red color
 ![result_paddy_mapping](./graphics/result_paddy_mapping.PNG)
 
 __Exercise:__ Similar to case study 1, try to extract paddy area using subtraction and thresholding operations
+
+## 3) Mapping Drought Area
+
+Here we are trying to map drought affected areas in the Cambodia. There was a known drought in 2010 in the Cambodia and surrounding countries. This drought event was occurred between 3 months period from 2010-April to 2010-June. So let's try to map drought extent in each month, and then try to map drought duration in months (map showing number of months each location/pixel is under drought).
+
+In the remote sensing context, droughts are assesses by drought indexes derived from satellite meteorological data. They are specifically designed to assess meteorological drought. Keetch-Byram Drought Index (KBDI) is one such drought index which calculates based on satellite-derived rainfall and temperature data. It reflects water gain or loss within the soil. KBDI is also widely used for drought monitoring for national weather forecast, wildfire prevention. And this is especially usefully in regions with rain-fed crops. The values of KBDI ranges from 0 (no moisture deficit) to 800 (extreme drought). This dataset is a product of a research team from a University of Tokyo (http://wtlab.iis.u-tokyo.ac.jp/en/research_e.html). And this dataset is currently available in GEE (https://developers.google.com/earth-engine/datasets/catalog/UTOKYO_WTLAB_KBDI_v1).
+
+Here we will perform following steps
+
+- We calculate mean KBDI values for each month (April, May and June) in 2010
+- We calculate KBDI baseline for averaging all images in each month (April, May and June). This provide our baseline values. This means, results of this calculation represents as normal monthly KBDI values.
+- Then, we can calculate KBDI anomaly values by subtracting KBDI baseline values from KBDI values of each month. As example, in month of April -> *[KBDI Anomaly in April, 2010] = [KBDI Value in April, 2010] - [KBDI Baseline Value in April]*
+- According to literature, if the KBDI Anomaly is higher than 300, that area is considered as drought area. So, we can use this simple threshold to extract drought areas in each month.
+- We can do the same process for April, May and June months in 2010, and we can add all of them to get drought duration map. After that, we can clip into the Cambodia's country boundary and visualize it.
+
+__Note:__ we can use *ee.Filter.calendarRange([start_month], [end_month],'month')* to filter ImageCollection just only based on month.
+
+```python
+# for April month
+kbdi4 = ee.ImageCollection('UTOKYO/WTLAB/KBDI/v1').filter(ee.Filter.date('2010-04-01','2010-04-30')).mean()
+kbdi4_baseline = ee.ImageCollection('UTOKYO/WTLAB/KBDI/v1').filter(ee.Filter.calendarRange(4,4,'month')).mean()
+kbdi4_anm = kbdi4.subtract(kbdi4_baseline)
+drought4 = kbdi4_anm.gt(300)
+
+# for May month
+kbdi5 = ee.ImageCollection('UTOKYO/WTLAB/KBDI/v1').filter(ee.Filter.date('2010-05-01','2010-05-30')).mean()
+kbdi5_baseline = ee.ImageCollection('UTOKYO/WTLAB/KBDI/v1').filter(ee.Filter.calendarRange(5,5,'month')).mean()
+kbdi5_anm = kbdi5.subtract(kbdi5_baseline)
+drought5 = kbdi5_anm.gt(300)
+
+# for June month
+kbdi6 = ee.ImageCollection('UTOKYO/WTLAB/KBDI/v1').filter(ee.Filter.date('2010-06-01','2010-06-30')).mean()
+kbdi6_baseline = ee.ImageCollection('UTOKYO/WTLAB/KBDI/v1').filter(ee.Filter.calendarRange(6,6,'month')).mean()
+kbdi6_anm = kbdi6.subtract(kbdi6_baseline)
+drought6 = kbdi6_anm.gt(300)
+
+# generating drought duration map
+drought_duration = drought4.add(drought5).add(drought6)
+
+# clipping to the Cambodia's country boundary
+aoi = ee.Geometry.Rectangle(102.3, 9.9, 107.7, 14.7)
+drought_duration = drought_duration.clip(aoi)
+
+# visualizing drought duration map
+Map = geemap.Map(center = [12.5,104.5], zoom = 8)
+vis_Para = {'min': 0, 'max': 3, 'palette':['yellow', 'brown']}
+Map.addLayer(drought_duration, vis_Para, name='Drought Duration')
+Map
+```
