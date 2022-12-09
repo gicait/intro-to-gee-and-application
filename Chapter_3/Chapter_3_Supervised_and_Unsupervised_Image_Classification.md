@@ -69,7 +69,7 @@ Map
 
 __Note:__ "Minimum Distance" Classification algorithm is one of most simple and well-known classification algorithm. In this case study, this algorithm will first estimate centers in paddy and non-paddy classes in the feature space created for our example points. Then class of all other pixels in the image will be determined by minimum distance to centers of these 2 classes. As example, if a new pixel is more close to paddy class than non-paddy class, that new pixel will be assigned to paddy class, and vice-versa. This idea is presented graphically in the below figure (representing feature space),
 
-![mim_dis_class](./graphics/mim_dis_class.PNG)
+![mim_dis_class](./graphics/mim_dis_class.png)
 
 If we are doing multi-class classification with many bands, manually selecting thresholds is a practically impossible task. In such kind of studies, we must use classification algorithms such as "Minimum Distance" Classification algorithm. Land-use / Land-cover mapping is a such kind of well-known example in the context of remote Sensing. In the following section, let's try to map landcover of a surrounding area of a city call "Krabi", located in the southern part of Thailand.
 
@@ -116,7 +116,7 @@ Map.addLayer(KrabiClassImg, vis_Para, name="Krabi - Landcover")
 Map
 ```
 
-![lc_results](./graphics/lc_results.PNG)
+![lc_results](./graphics/lc_results.png)
 
 __Note:__ Here we are using Random Forest Classifier which is a well known Classifier in the remote sensing community. It is better and more sophisticated than Minimum Distance Classifier, that we have used in the last section. Hence, Random Forest Classifier is more suitable for advance classifications, such as landcover mapping. The Random Forest Classifier is based on decision trees. And it used multiple decision trees to classify an image.
 
