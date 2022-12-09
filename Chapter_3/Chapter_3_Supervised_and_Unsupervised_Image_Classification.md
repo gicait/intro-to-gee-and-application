@@ -1,12 +1,11 @@
 
-
-# Image Supervised and Unsupervised Classification with GEE
+# Chapter 3 - Image Supervised and Unsupervised Classification with GEE
 
 __Content__
 
-- 1) Supervised Classification
-- 2) Accuracy Assessment
-- 3) Unsupervised Classification (Clustering)
+* (1) Supervised Classification
+* (2) Accuracy Assessment
+* (3) Unsupervised Classification (Clustering)
 
 First, let's authenticate, initialize, and import libraries to GEE as usual
 
