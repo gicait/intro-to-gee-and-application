@@ -12,7 +12,7 @@ Some of important links related to GEE.
 
 __Content__
 
-* 1 Google Earth Engine Initial Set-up
+* (1) Google Earth Engine Initial Set-up
 * 2 Getting Started with GEE Images
 * 3 Mathematical Operations on Images
 * 4 Exporting GEE Images
